@@ -1,3 +1,6 @@
 fastapi
 nicegui
 aiohttp
+pandas
+numpy
+dash

@@ -1,16 +1,34 @@
-# server.py
-from aiohttp import web
-import json
+import dash
+from dash import html, dcc
 
-async def handle_fetch_stock(request):
-    data = await request.json()
-    ticker = data["ticker"]
-    # Simulate fetching stock data (replace with yfinance/API)
-    fake_data = {"price": 150.25, "ticker": ticker}
-    return web.json_response(fake_data)
+app = dash.Dash(__name__)
 
-app = web.Application()
-app.router.add_post("/fetch_stock", handle_fetch_stock)
+app.layout = html.Div([
+    # Header Navigation
+    html.Nav([
+        html.Div([
+            # Logo/Brand
+            html.Div(
+                html.A("My Dash App", href="/", className="navbar-brand"),
+                className="navbar-header"
+            ),
+            
+            # Navigation Links
+            html.Ul([
+                html.Li(html.A("Home", href="/", className="nav-link")),
+                html.Li(html.A("Dashboard", href="/dashboard", className="nav-link")),
+                html.Li(html.A("Analysis", href="/analysis", className="nav-link")),
+                html.Li(html.A("About", href="/about", className="nav-link")),
+            ], className="navbar-nav")
+        ], className="navbar-container")
+    ], className="navbar"),
+    
+    # Page Content
+    html.Div(id='page-content', style={'padding': '20px'}),
+    
+    # URL Router
+    dcc.Location(id='url', refresh=False)
+], style={'fontFamily': 'Arial, sans-serif'})
 
-if __name__ == "__main__":
-    web.run_app(app, port=8080)  # Access at http://localhost:8080
+if __name__ == '__main__':
+    app.run_server(debug=True)
