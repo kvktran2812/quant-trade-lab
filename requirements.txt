@@ -1,6 +1,3 @@
-fastapi
-nicegui
-aiohttp
-pandas
+fastapi[standard]
 numpy
-dash
+pandas
